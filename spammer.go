@@ -47,7 +47,6 @@ func SelectUsers(in, out chan interface{}) {
 				out <- user
 				return
 			} else {
-
 				GetUser("")
 			}
 		}(email)
