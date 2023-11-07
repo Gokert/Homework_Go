@@ -44,19 +44,6 @@ func SelectUsers(in, out chan interface{}) {
 	wg.Wait()
 }
 
-/*
-
-	_, isAlias := usersAliases[alias]
-	_, loaded2 := seen.LoadOrStore(alias, true)
-
-	if !isAlias && !loaded2 {
-		user := GetUser(alias)
-		out <- user
-	}
-
-
-*/
-
 func SelectMessages(in, out chan interface{}) {
 	var wg sync.WaitGroup
 
