@@ -35,9 +35,8 @@ func SelectUsers(in, out chan interface{}) {
 
 			emailStr := email.(string)
 
-			alias := usersAliases[emailStr]
-
-			if alias != "" {
+			alias, found := usersAliases[emailStr]
+			if found {
 				emailStr = alias
 			}
 
