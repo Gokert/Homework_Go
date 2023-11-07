@@ -32,26 +32,30 @@ func SelectUsers(in, out chan interface{}) {
 		wg.Add(1)
 		go func(email interface{}) {
 			defer wg.Done()
-
 			emailStr := email.(string)
+			user := GetUser(emailStr)
 
-			alias, found := usersAliases[emailStr]
-			if found {
-				emailStr = alias
-			}
-
-			_, loaded1 := seen.LoadOrStore(emailStr, true)
-			if !loaded1 {
-				user := GetUser(emailStr)
+			_, loaded := seen.LoadOrStore(user, true)
+			if !loaded {
 				out <- user
-				return
-			} else {
-				GetUser("")
 			}
 		}(email)
 	}
 	wg.Wait()
 }
+
+/*
+
+	_, isAlias := usersAliases[alias]
+	_, loaded2 := seen.LoadOrStore(alias, true)
+
+	if !isAlias && !loaded2 {
+		user := GetUser(alias)
+		out <- user
+	}
+
+
+*/
 
 func SelectMessages(in, out chan interface{}) {
 	var wg sync.WaitGroup
